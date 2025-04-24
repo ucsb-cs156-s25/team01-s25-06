@@ -1,4 +1,4 @@
-# STARTER-team01
+# team01-s25-06
 
 Instructions: <https://ucsb-cs156.github.io/s25/lab/team01.html>
 
@@ -18,7 +18,7 @@ TODO: Fill in this table with correct information.
 | UCSBDiningCommonsMenuItem |              |           |
 | UCSBOrganization          |              |           |
 | RecommendationRequest     |              |           |
-| MenuItemReview            |              |           |
+| MenuItemReview            | Yarwin Liu   | yarwinliu |
 | HelpRequest               |              |           |
 | Articles                  |              |           |
 

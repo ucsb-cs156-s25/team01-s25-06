@@ -63,7 +63,7 @@ import org.springframework.web.bind.annotation.RestController;
             @Parameter(name=&quot;orgCode&quot;) @RequestParam String orgCode,
             @Parameter(name=&quot;orgTranslationShort&quot;) @RequestParam String orgTranslationShort,
             @Parameter(name=&quot;orgTranslation&quot;) @RequestParam String orgTranslation,
-            @Parameter(name=&quot;inactive&quot;) @RequestParam String inactive)
+            @Parameter(name=&quot;inactive&quot;) @RequestParam boolean inactive)
             throws JsonProcessingException {
 
 
@@ -71,7 +71,7 @@ import org.springframework.web.bind.annotation.RestController;
 <span class="fc" id="L71">        org.setOrgCode(orgCode);</span>
 <span class="fc" id="L72">        org.setOrgTranslationShort(orgTranslationShort);</span>
 <span class="fc" id="L73">        org.setOrgTranslation(orgTranslation);</span>
-<span class="fc" id="L74">        org.setInactive(Boolean.parseBoolean(inactive));</span>
+<span class="fc" id="L74">        org.setInactive(inactive);</span>
 <span class="fc" id="L75">        UCSBOrganizations savedOrg = ucsbOrganizationsRepository.save(org);</span>
 
 <span class="fc" id="L77">        return savedOrg;</span>

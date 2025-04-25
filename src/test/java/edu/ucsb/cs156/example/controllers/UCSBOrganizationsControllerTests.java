@@ -73,13 +73,13 @@ public class UCSBOrganizationsControllerTests extends ControllerTestCase {
                 .orgCode("GR")
                 .orgTranslationShort("Gaucho Race")
                 .orgTranslation("Gaucho Racing")
-                .inactive(false)
+                .inactive(true)
                 .build();
         UCSBOrganizations ucsbOrganizations2 = UCSBOrganizations.builder()
                 .orgCode("ACM")
                 .orgTranslationShort("Association of CM")
                 .orgTranslation("Association of Computing Machinery")
-                .inactive(false)
+                .inactive(true)
                 .build();
         UCSBOrganizations ucsbOrganizations3 = UCSBOrganizations.builder()
                 .orgCode("C1")

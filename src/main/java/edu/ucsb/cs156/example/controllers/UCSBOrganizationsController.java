@@ -63,7 +63,7 @@ public class UCSBOrganizationsController extends ApiController {
             @Parameter(name="orgCode") @RequestParam String orgCode,
             @Parameter(name="orgTranslationShort") @RequestParam String orgTranslationShort,
             @Parameter(name="orgTranslation") @RequestParam String orgTranslation,
-            @Parameter(name="inactive") @RequestParam String inactive)
+            @Parameter(name="inactive") @RequestParam boolean inactive)
             throws JsonProcessingException {
 
 
@@ -71,7 +71,7 @@ public class UCSBOrganizationsController extends ApiController {
         org.setOrgCode(orgCode);
         org.setOrgTranslationShort(orgTranslationShort);
         org.setOrgTranslation(orgTranslation);
-        org.setInactive(Boolean.parseBoolean(inactive));
+        org.setInactive(inactive);
         UCSBOrganizations savedOrg = ucsbOrganizationsRepository.save(org);
 
         return savedOrg;

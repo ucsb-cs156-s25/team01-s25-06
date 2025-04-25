@@ -81,9 +81,14 @@ public class UCSBOrganizationsControllerTests extends ControllerTestCase {
                 .orgTranslation("Association of Computing Machinery")
                 .inactive(false)
                 .build();
-
+            UCSBOrganizations ucsbOrganizations3 = UCSBOrganizations.builder()
+                .orgCode("C1")
+                .orgTranslationShort("Club")
+                .orgTranslation("Club One")
+                .inactive(true)
+                .build();
             ArrayList<UCSBOrganizations> expectedUCSBOrganizations = new ArrayList<>();
-            expectedUCSBOrganizations.addAll(Arrays.asList(ucsbOrganizations1, ucsbOrganizations2));
+            expectedUCSBOrganizations.addAll(Arrays.asList(ucsbOrganizations1, ucsbOrganizations2, ucsbOrganizations3));
 
             when(ucsbOrganizationsRepository.findAll()).thenReturn(expectedUCSBOrganizations);
 

@@ -1,3 +1,4 @@
+
 package edu.ucsb.cs156.example.entities;
 
 import jakarta.persistence.Entity;
@@ -30,4 +31,5 @@ public class MenuItemReview {
   private int stars;
   private String comments;
   private LocalDateTime dateReviewed;
+
 }

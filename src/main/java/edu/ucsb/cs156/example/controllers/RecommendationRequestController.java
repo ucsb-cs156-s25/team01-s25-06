@@ -3,6 +3,7 @@ package edu.ucsb.cs156.example.controllers;
 import edu.ucsb.cs156.example.entities.RecommendationRequest;
 import edu.ucsb.cs156.example.errors.EntityNotFoundException;
 import edu.ucsb.cs156.example.repositories.RecommendationRequestRepository;
+import java.time.LocalDate;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -88,8 +89,8 @@ public class RecommendationRequestController extends ApiController {
             @Parameter(name="requesterEmail") @RequestParam String requesterEmail,
             @Parameter(name="professorEmail") @RequestParam String professorEmail,
             @Parameter(name="explanation") @RequestParam String explanation,
-            @Parameter(name="dateRequested", description="date (in iso format, e.g. YYYY-mm-dd; see https://en.wikipedia.org/wiki/ISO_8601)") @RequestParam("dateRequested") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateRequested,
-            @Parameter(name="dateNeeded", description="date (in iso format, e.g. YYYY-mm-dd; see https://en.wikipedia.org/wiki/ISO_8601)") @RequestParam("dateNeeded") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateNeeded,
+            @Parameter(name="dateRequested", description="date (in iso format, e.g. YYYY-mm-dd; see https://en.wikipedia.org/wiki/ISO_8601)") @RequestParam("dateRequested") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateRequested,
+            @Parameter(name="dateNeeded", description="date (in iso format, e.g. YYYY-mm-dd; see https://en.wikipedia.org/wiki/ISO_8601)") @RequestParam("dateNeeded") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateNeeded,
             @Parameter(name="done") @RequestParam boolean done)
             throws JsonProcessingException {
 

@@ -130,33 +130,33 @@ public class RecommendationRequestController extends ApiController {
     //     return genericMessage("Recommendation Request with id %s deleted".formatted(id));
     // }
 
-    // /**
-    //  * Update a single recommendation request
-    //  * 
-    //  * @param id       id of the date to update
-    //  * @param incoming the new date
-    //  * @return the updated date object
-    //  */
-    // @Operation(summary= "Update a single recommendation request")
-    // @PreAuthorize("hasRole('ROLE_ADMIN')")
-    // @PutMapping("")
-    // public RecommendationRequest updateRecommendationRequest(
-    //         @Parameter(name="id") @RequestParam Long id,
-    //         @RequestBody @Valid RecommendationRequest incoming) {
+    /**
+     * Update a single recommendation request
+     * 
+     * @param id       id of the recommendation request to update
+     * @param incoming the new recommendation request 
+     * @return the updated recommendation request object
+     */
+    @Operation(summary= "Update a single recommendation request")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PutMapping("")
+    public RecommendationRequest updateRecommendationRequest(
+            @Parameter(name="id") @RequestParam Long id,
+            @RequestBody @Valid RecommendationRequest incoming) {
 
-    //     RecommendationRequest rr = rrrepository.findById(id)
-    //             .orElseThrow(() -> new EntityNotFoundException(RecommendationRequest.class, id));
+        RecommendationRequest rr = rrrepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(RecommendationRequest.class, id));
 
-    //     rr.setRequesterEmail(incoming.getRequesterEmail());
-    //     rr.setProfessorEmail(incoming.getProfessorEmail());
-    //     rr.setExplanation(incoming.getExplanation());
-    //     rr.setDateRequested(incoming.getDateRequested());
-    //     rr.setDateNeeded(incoming.getDateNeeded());
-    //     rr.setDone(incoming.getDone());
+        rr.setRequesterEmail(incoming.getRequesterEmail());
+        rr.setProfessorEmail(incoming.getProfessorEmail());
+        rr.setExplanation(incoming.getExplanation());
+        rr.setDateRequested(incoming.getDateRequested());
+        rr.setDateNeeded(incoming.getDateNeeded());
+        rr.setDone(incoming.getDone());
 
 
-    //     rrrepository.save(rr);
+        rrrepository.save(rr);
 
-    //     return rr;
-    // }
+        return rr;
+    }
 }

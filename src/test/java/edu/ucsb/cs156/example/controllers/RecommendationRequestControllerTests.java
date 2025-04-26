@@ -239,76 +239,81 @@ public class RecommendationRequestControllerTests extends ControllerTestCase {
         //         assertEquals("UCSBDate with id 15 not found", json.get("message"));
         // }
 
-        // @WithMockUser(roles = { "ADMIN", "USER" })
-        // @Test
-        // public void admin_can_edit_an_existing_ucsbdate() throws Exception {
-        //         // arrange
+        @WithMockUser(roles = { "ADMIN", "USER" })
+        @Test
+        public void admin_can_edit_an_existing_recommendationrequest() throws Exception {
+                // arrange
 
-        //         LocalDateTime ldt1 = LocalDateTime.parse("2022-01-03T00:00:00");
-        //         LocalDateTime ldt2 = LocalDateTime.parse("2023-01-03T00:00:00");
 
-        //         UCSBDate ucsbDateOrig = UCSBDate.builder()
-        //                         .name("firstDayOfClasses")
-        //                         .quarterYYYYQ("20222")
-        //                         .localDateTime(ldt1)
-        //                         .build();
+                RecommendationRequest rr1 = RecommendationRequest.builder()
+                                .requesterEmail("aryan@ucsb.edu")
+                                .professorEmail("blah@ucsb.edu")
+                                .explanation("INeed a recommendation for a job")
+                                .dateRequested(LocalDate.parse("2022-01-03"))
+                                .dateNeeded(LocalDate.parse("2022-01-10"))
+                                .done(true)
+                                .build();
 
-        //         UCSBDate ucsbDateEdited = UCSBDate.builder()
-        //                         .name("firstDayOfFestivus")
-        //                         .quarterYYYYQ("20232")
-        //                         .localDateTime(ldt2)
-        //                         .build();
+                RecommendationRequest rr2 = RecommendationRequest.builder()
+                                .requesterEmail("aryan_edited@ucsb.edu")
+                                .professorEmail("blah_edited@ucsb.edu")
+                                .explanation("INeed a recommendation for a job_edited")
+                                .dateRequested(LocalDate.parse("2025-01-01"))
+                                .dateNeeded(LocalDate.parse("2025-01-15"))
+                                .done(false)
+                                .build();
 
-        //         String requestBody = mapper.writeValueAsString(ucsbDateEdited);
+                String requestBody = mapper.writeValueAsString(rr2);
 
-        //         when(ucsbDateRepository.findById(eq(67L))).thenReturn(Optional.of(ucsbDateOrig));
+                when(rrrepository.findById(eq(67L))).thenReturn(Optional.of(rr1));
 
-        //         // act
-        //         MvcResult response = mockMvc.perform(
-        //                         put("/api/recommendationrequest?id=67")
-        //                                         .contentType(MediaType.APPLICATION_JSON)
-        //                                         .characterEncoding("utf-8")
-        //                                         .content(requestBody)
-        //                                         .with(csrf()))
-        //                         .andExpect(status().isOk()).andReturn();
+                // act
+                MvcResult response = mockMvc.perform(
+                                put("/api/recommendationrequest?id=67")
+                                                .contentType(MediaType.APPLICATION_JSON)
+                                                .characterEncoding("utf-8")
+                                                .content(requestBody)
+                                                .with(csrf()))
+                                .andExpect(status().isOk()).andReturn();
 
-        //         // assert
-        //         verify(ucsbDateRepository, times(1)).findById(67L);
-        //         verify(ucsbDateRepository, times(1)).save(ucsbDateEdited); // should be saved with correct user
-        //         String responseString = response.getResponse().getContentAsString();
-        //         assertEquals(requestBody, responseString);
-        // }
+                // assert
+                verify(rrrepository, times(1)).findById(67L);
+                verify(rrrepository, times(1)).save(rr2); // should be saved with correct user
+                String responseString = response.getResponse().getContentAsString();
+                assertEquals(requestBody, responseString);
+        }
 
-        // @WithMockUser(roles = { "ADMIN", "USER" })
-        // @Test
-        // public void admin_cannot_edit_ucsbdate_that_does_not_exist() throws Exception {
-        //         // arrange
+        @WithMockUser(roles = { "ADMIN", "USER" })
+        @Test
+        public void admin_cannot_edit_ucsbdate_that_does_not_exist() throws Exception {
+                // arrange
 
-        //         LocalDateTime ldt1 = LocalDateTime.parse("2022-01-03T00:00:00");
 
-        //         UCSBDate ucsbEditedDate = UCSBDate.builder()
-        //                         .name("firstDayOfClasses")
-        //                         .quarterYYYYQ("20222")
-        //                         .localDateTime(ldt1)
-        //                         .build();
+                 RecommendationRequest rr2 = RecommendationRequest.builder()
+                                .requesterEmail("aryan_edited@ucsb.edu")
+                                .professorEmail("blah_edited@ucsb.edu")
+                                .explanation("INeed a recommendation for a job_edited")
+                                .dateRequested(LocalDate.parse("2025-01-01"))
+                                .dateNeeded(LocalDate.parse("2025-01-15"))
+                                .done(true)
+                                .build();
+                String requestBody = mapper.writeValueAsString(rr2);
 
-        //         String requestBody = mapper.writeValueAsString(ucsbEditedDate);
+                when(rrrepository.findById(eq(67L))).thenReturn(Optional.empty());
 
-        //         when(ucsbDateRepository.findById(eq(67L))).thenReturn(Optional.empty());
+                // act
+                MvcResult response = mockMvc.perform(
+                                put("/api/recommendationrequest?id=67")
+                                                .contentType(MediaType.APPLICATION_JSON)
+                                                .characterEncoding("utf-8")
+                                                .content(requestBody)
+                                                .with(csrf()))
+                                .andExpect(status().isNotFound()).andReturn();
 
-        //         // act
-        //         MvcResult response = mockMvc.perform(
-        //                         put("/api/recommendationrequest?id=67")
-        //                                         .contentType(MediaType.APPLICATION_JSON)
-        //                                         .characterEncoding("utf-8")
-        //                                         .content(requestBody)
-        //                                         .with(csrf()))
-        //                         .andExpect(status().isNotFound()).andReturn();
+                // assert
+                verify(rrrepository, times(1)).findById(67L);
+                Map<String, Object> json = responseToJson(response);
+                assertEquals("RecommendationRequest with id 67 not found", json.get("message"));
 
-        //         // assert
-        //         verify(ucsbDateRepository, times(1)).findById(67L);
-        //         Map<String, Object> json = responseToJson(response);
-        //         assertEquals("UCSBDate with id 67 not found", json.get("message"));
-
-        // }
+        }
 }

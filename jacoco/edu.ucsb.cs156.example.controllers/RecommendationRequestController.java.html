@@ -54,22 +54,22 @@ import java.time.LocalDateTime;
 <span class="fc" id="L54">        return rr;</span>
     }
 
-    // /**
-    //  * Get a single recommendation request by id
-    //  * 
-    //  * @param id the id of the recommendation request
-    //  * @return a recommendation request
-    //  */
-    // @Operation(summary= &quot;Get a single recommendation request&quot;)
-    // @PreAuthorize(&quot;hasRole('ROLE_USER')&quot;)
-    // @GetMapping(&quot;&quot;)
-    // public RecommendationRequest getById(
-    //         @Parameter(name=&quot;id&quot;) @RequestParam Long id) {
-    //     RecommendationRequest rr = rrrepository.findById(id)
-    //             .orElseThrow(() -&gt; new EntityNotFoundException(RecommendationRequest.class, id));
+    /**
+     * Get a single recommendation request by id
+     * 
+     * @param id the id of the recommendation request
+     * @return a recommendation request
+     */
+    @Operation(summary= &quot;Get a single recommendation request&quot;)
+    @PreAuthorize(&quot;hasRole('ROLE_USER')&quot;)
+    @GetMapping(&quot;&quot;)
+    public RecommendationRequest getById(
+            @Parameter(name=&quot;id&quot;) @RequestParam Long id) {
+<span class="fc" id="L68">        RecommendationRequest rr = rrrepository.findById(id)</span>
+<span class="fc" id="L69">                .orElseThrow(() -&gt; new EntityNotFoundException(RecommendationRequest.class, id));</span>
 
-    //     return rr;
-    // }
+<span class="fc" id="L71">        return rr;</span>
+    }
 
     /**
      * Create a new recommendation request

@@ -1,6 +1,5 @@
 package edu.ucsb.cs156.example.controllers;
 
-import edu.ucsb.cs156.example.entities.UCSBDate;
 import edu.ucsb.cs156.example.entities.UCSBOrganizations;
 import edu.ucsb.cs156.example.errors.EntityNotFoundException;
 import edu.ucsb.cs156.example.repositories.UCSBOrganizationsRepository;
@@ -14,6 +13,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -118,5 +118,23 @@ public class UCSBOrganizationsController extends ApiController {
         
         return ucsbOrganizations;
     }
+        /**
+     * Delete a UCSBOrganization
+     * 
+     * @param id the id of the organization to delete
+     * @return a message indicating the organization was deleted
+     */
+    @Operation(summary= "Delete a UCSBOrganization")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @DeleteMapping("")
+    public Object deleteUCSBOrganization(
+            @Parameter(name="id") @RequestParam Long id) {
+        UCSBOrganizations ucsbOrganizations = ucsbOrganizationsRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(UCSBOrganizations.class, id));
+
+        ucsbOrganizationsRepository.delete(ucsbOrganizations);
+        return genericMessage("UCSBOrganization with id %s deleted".formatted(id));
+    }
+
 
 }

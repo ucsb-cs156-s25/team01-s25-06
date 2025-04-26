@@ -139,7 +139,7 @@ public class RecommendationRequestControllerTests extends ControllerTestCase {
                                 .explanation("INeed a recommendation for a job")
                                 .dateRequested(LocalDate.parse("2022-01-03"))
                                 .dateNeeded(LocalDate.parse("2022-01-10"))
-                                .done(false)
+                                .done(true)
                                 .build();
 
 
@@ -171,14 +171,14 @@ public class RecommendationRequestControllerTests extends ControllerTestCase {
                                 .explanation("INeed a recommendation for a job")
                                 .dateRequested(LocalDate.parse("2022-01-03"))
                                 .dateNeeded(LocalDate.parse("2022-01-10"))
-                                .done(false)
+                                .done(true)
                                 .build();
 
                 when(rrrepository.save(eq(rr1))).thenReturn(rr1);
 
                 // act
                 MvcResult response = mockMvc.perform(
-                                post("/api/recommendationrequest/post?requesterEmail=aryan@ucsb.edu&professorEmail=blah@ucsb.edu&explanation=INeed a recommendation for a job&dateRequested=2022-01-03&dateNeeded=2022-01-10&done=false")
+                                post("/api/recommendationrequest/post?requesterEmail=aryan@ucsb.edu&professorEmail=blah@ucsb.edu&explanation=INeed a recommendation for a job&dateRequested=2022-01-03&dateNeeded=2022-01-10&done=true")
                                                 .with(csrf()))
                                 .andExpect(status().isOk()).andReturn();
 

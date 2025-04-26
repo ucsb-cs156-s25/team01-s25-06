@@ -1,11 +1,13 @@
 package edu.ucsb.cs156.example.controllers;
 
+import edu.ucsb.cs156.example.entities.UCSBDate;
 import edu.ucsb.cs156.example.entities.UCSBOrganizations;
 import edu.ucsb.cs156.example.errors.EntityNotFoundException;
 import edu.ucsb.cs156.example.repositories.UCSBOrganizationsRepository;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -14,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -88,6 +92,31 @@ public class UCSBOrganizationsController extends ApiController {
         return ucsbOrganization;
     }
 
+        /**
+     * Update a single organization
+     * 
+     * @param id       id of the organization to update
+     * @param incoming the new organization
+     * @return the updated organization object
+     */
+    @Operation(summary= "Update a organization date")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PutMapping("")
+    public UCSBOrganizations updateUCSBOrganization(
+            @Parameter(name="id") @RequestParam Long id,
+            @RequestBody @Valid UCSBOrganizations incoming) {
 
+        UCSBOrganizations ucsbOrganizations = ucsbOrganizationsRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(UCSBOrganizations.class, id));
+
+        ucsbOrganizations.setOrgCode(incoming.getOrgCode());
+        ucsbOrganizations.setOrgTranslation(incoming.getOrgTranslation());
+        ucsbOrganizations.setOrgTranslationShort(incoming.getOrgTranslationShort());
+        ucsbOrganizations.setInactive(incoming.getInactive());
+
+        ucsbOrganizationsRepository.save(ucsbOrganizations);
+        
+        return ucsbOrganizations;
+    }
 
 }

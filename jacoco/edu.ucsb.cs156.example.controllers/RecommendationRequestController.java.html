@@ -130,34 +130,34 @@ import java.time.LocalDateTime;
     //     return genericMessage(&quot;Recommendation Request with id %s deleted&quot;.formatted(id));
     // }
 
-    // /**
-    //  * Update a single recommendation request
-    //  * 
-    //  * @param id       id of the date to update
-    //  * @param incoming the new date
-    //  * @return the updated date object
-    //  */
-    // @Operation(summary= &quot;Update a single recommendation request&quot;)
-    // @PreAuthorize(&quot;hasRole('ROLE_ADMIN')&quot;)
-    // @PutMapping(&quot;&quot;)
-    // public RecommendationRequest updateRecommendationRequest(
-    //         @Parameter(name=&quot;id&quot;) @RequestParam Long id,
-    //         @RequestBody @Valid RecommendationRequest incoming) {
+    /**
+     * Update a single recommendation request
+     * 
+     * @param id       id of the recommendation request to update
+     * @param incoming the new recommendation request 
+     * @return the updated recommendation request object
+     */
+    @Operation(summary= &quot;Update a single recommendation request&quot;)
+    @PreAuthorize(&quot;hasRole('ROLE_ADMIN')&quot;)
+    @PutMapping(&quot;&quot;)
+    public RecommendationRequest updateRecommendationRequest(
+            @Parameter(name=&quot;id&quot;) @RequestParam Long id,
+            @RequestBody @Valid RecommendationRequest incoming) {
 
-    //     RecommendationRequest rr = rrrepository.findById(id)
-    //             .orElseThrow(() -&gt; new EntityNotFoundException(RecommendationRequest.class, id));
+<span class="fc" id="L147">        RecommendationRequest rr = rrrepository.findById(id)</span>
+<span class="fc" id="L148">                .orElseThrow(() -&gt; new EntityNotFoundException(RecommendationRequest.class, id));</span>
 
-    //     rr.setRequesterEmail(incoming.getRequesterEmail());
-    //     rr.setProfessorEmail(incoming.getProfessorEmail());
-    //     rr.setExplanation(incoming.getExplanation());
-    //     rr.setDateRequested(incoming.getDateRequested());
-    //     rr.setDateNeeded(incoming.getDateNeeded());
-    //     rr.setDone(incoming.getDone());
+<span class="fc" id="L150">        rr.setRequesterEmail(incoming.getRequesterEmail());</span>
+<span class="fc" id="L151">        rr.setProfessorEmail(incoming.getProfessorEmail());</span>
+<span class="fc" id="L152">        rr.setExplanation(incoming.getExplanation());</span>
+<span class="fc" id="L153">        rr.setDateRequested(incoming.getDateRequested());</span>
+<span class="fc" id="L154">        rr.setDateNeeded(incoming.getDateNeeded());</span>
+<span class="fc" id="L155">        rr.setDone(incoming.getDone());</span>
 
 
-    //     rrrepository.save(rr);
+<span class="fc" id="L158">        rrrepository.save(rr);</span>
 
-    //     return rr;
-    // }
+<span class="fc" id="L160">        return rr;</span>
+    }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

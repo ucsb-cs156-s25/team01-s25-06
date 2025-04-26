@@ -54,22 +54,22 @@ public class RecommendationRequestController extends ApiController {
         return rr;
     }
 
-    /**
-     * Get a single recommendation request by id
-     * 
-     * @param id the id of the recommendation request
-     * @return a recommendation request
-     */
-    @Operation(summary= "Get a single recommendation request")
-    @PreAuthorize("hasRole('ROLE_USER')")
-    @GetMapping("")
-    public RecommendationRequest getById(
-            @Parameter(name="id") @RequestParam Long id) {
-        RecommendationRequest rr = rrrepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException(RecommendationRequest.class, id));
+    // /**
+    //  * Get a single recommendation request by id
+    //  * 
+    //  * @param id the id of the recommendation request
+    //  * @return a recommendation request
+    //  */
+    // @Operation(summary= "Get a single recommendation request")
+    // @PreAuthorize("hasRole('ROLE_USER')")
+    // @GetMapping("")
+    // public RecommendationRequest getById(
+    //         @Parameter(name="id") @RequestParam Long id) {
+    //     RecommendationRequest rr = rrrepository.findById(id)
+    //             .orElseThrow(() -> new EntityNotFoundException(RecommendationRequest.class, id));
 
-        return rr;
-    }
+    //     return rr;
+    // }
 
     /**
      * Create a new recommendation request
@@ -112,51 +112,51 @@ public class RecommendationRequestController extends ApiController {
         return savedRecommendationRequest;
     }
 
-    /**
-     * Delete a Recommendation Request
-     * 
-     * @param id the id of the recommendation request to delete
-     * @return a message indicating the recommendation request was deleted
-     */
-    @Operation(summary= "Delete a Recommendation Request")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @DeleteMapping("")
-    public Object deleteRecommendationRequest(
-            @Parameter(name="id") @RequestParam Long id) {
-        RecommendationRequest rr = rrrepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException(RecommendationRequest.class, id));
+    // /**
+    //  * Delete a Recommendation Request
+    //  * 
+    //  * @param id the id of the recommendation request to delete
+    //  * @return a message indicating the recommendation request was deleted
+    //  */
+    // @Operation(summary= "Delete a Recommendation Request")
+    // @PreAuthorize("hasRole('ROLE_ADMIN')")
+    // @DeleteMapping("")
+    // public Object deleteRecommendationRequest(
+    //         @Parameter(name="id") @RequestParam Long id) {
+    //     RecommendationRequest rr = rrrepository.findById(id)
+    //             .orElseThrow(() -> new EntityNotFoundException(RecommendationRequest.class, id));
 
-        rrrepository.delete(rr);
-        return genericMessage("Recommendation Request with id %s deleted".formatted(id));
-    }
+    //     rrrepository.delete(rr);
+    //     return genericMessage("Recommendation Request with id %s deleted".formatted(id));
+    // }
 
-    /**
-     * Update a single recommendation request
-     * 
-     * @param id       id of the date to update
-     * @param incoming the new date
-     * @return the updated date object
-     */
-    @Operation(summary= "Update a single recommendation request")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @PutMapping("")
-    public RecommendationRequest updateRecommendationRequest(
-            @Parameter(name="id") @RequestParam Long id,
-            @RequestBody @Valid RecommendationRequest incoming) {
+    // /**
+    //  * Update a single recommendation request
+    //  * 
+    //  * @param id       id of the date to update
+    //  * @param incoming the new date
+    //  * @return the updated date object
+    //  */
+    // @Operation(summary= "Update a single recommendation request")
+    // @PreAuthorize("hasRole('ROLE_ADMIN')")
+    // @PutMapping("")
+    // public RecommendationRequest updateRecommendationRequest(
+    //         @Parameter(name="id") @RequestParam Long id,
+    //         @RequestBody @Valid RecommendationRequest incoming) {
 
-        RecommendationRequest rr = rrrepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException(RecommendationRequest.class, id));
+    //     RecommendationRequest rr = rrrepository.findById(id)
+    //             .orElseThrow(() -> new EntityNotFoundException(RecommendationRequest.class, id));
 
-        rr.setRequesterEmail(incoming.getRequesterEmail());
-        rr.setProfessorEmail(incoming.getProfessorEmail());
-        rr.setExplanation(incoming.getExplanation());
-        rr.setDateRequested(incoming.getDateRequested());
-        rr.setDateNeeded(incoming.getDateNeeded());
-        rr.setDone(incoming.getDone());
+    //     rr.setRequesterEmail(incoming.getRequesterEmail());
+    //     rr.setProfessorEmail(incoming.getProfessorEmail());
+    //     rr.setExplanation(incoming.getExplanation());
+    //     rr.setDateRequested(incoming.getDateRequested());
+    //     rr.setDateNeeded(incoming.getDateNeeded());
+    //     rr.setDone(incoming.getDone());
 
 
-        rrrepository.save(rr);
+    //     rrrepository.save(rr);
 
-        return rr;
-    }
+    //     return rr;
+    // }
 }

@@ -131,6 +131,7 @@ public class ArticlesController extends ApiController {
         article.setExplanation(incoming.getExplanation());
         article.setUrl(incoming.getUrl());
         article.setTitle(incoming.getTitle());
+        article.setEmail(incoming.getEmail());
 
         articleRepository.save(article);
 

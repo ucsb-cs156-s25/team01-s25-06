@@ -112,23 +112,23 @@ import java.time.LocalDateTime;
 <span class="fc" id="L112">        return savedRecommendationRequest;</span>
     }
 
-    // /**
-    //  * Delete a Recommendation Request
-    //  * 
-    //  * @param id the id of the recommendation request to delete
-    //  * @return a message indicating the recommendation request was deleted
-    //  */
-    // @Operation(summary= &quot;Delete a Recommendation Request&quot;)
-    // @PreAuthorize(&quot;hasRole('ROLE_ADMIN')&quot;)
-    // @DeleteMapping(&quot;&quot;)
-    // public Object deleteRecommendationRequest(
-    //         @Parameter(name=&quot;id&quot;) @RequestParam Long id) {
-    //     RecommendationRequest rr = rrrepository.findById(id)
-    //             .orElseThrow(() -&gt; new EntityNotFoundException(RecommendationRequest.class, id));
+    /**
+     * Delete a Recommendation Request
+     * 
+     * @param id the id of the recommendation request to delete
+     * @return a message indicating the recommendation request was deleted
+     */
+    @Operation(summary= &quot;Delete a Recommendation Request&quot;)
+    @PreAuthorize(&quot;hasRole('ROLE_ADMIN')&quot;)
+    @DeleteMapping(&quot;&quot;)
+    public Object deleteRecommendationRequest(
+            @Parameter(name=&quot;id&quot;) @RequestParam Long id) {
+<span class="fc" id="L126">        RecommendationRequest rr = rrrepository.findById(id)</span>
+<span class="fc" id="L127">                .orElseThrow(() -&gt; new EntityNotFoundException(RecommendationRequest.class, id));</span>
 
-    //     rrrepository.delete(rr);
-    //     return genericMessage(&quot;Recommendation Request with id %s deleted&quot;.formatted(id));
-    // }
+<span class="fc" id="L129">        rrrepository.delete(rr);</span>
+<span class="fc" id="L130">        return genericMessage(&quot;Recommendation Request with id %s deleted&quot;.formatted(id));</span>
+    }
 
     /**
      * Update a single recommendation request

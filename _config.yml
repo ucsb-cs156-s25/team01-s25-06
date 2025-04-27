@@ -23,4 +23,4 @@ repo_name: "TBD"
 repo: ucsb-cs156-s25/team01-s25-06
 owner: ucsb-cs156-s25
 repo_name: team01-s25-06
-pull_requests: [{"author":{"id":"MDQ6VXNlcjY2ODQ5Nzc3","is_bot":false,"login":"yarwinliu","name":""},"headRefName":"yl-mir-delete","number":67,"title":"Yl mir delete","url":"https://github.com/ucsb-cs156-s25/team01-s25-06/pull/67"},{"author":{"id":"U_kgDOBXu1PQ","is_bot":false,"login":"aryanchopra1802","name":""},"headRefName":"revert-54-Aryan-ReqRequestTable","number":56,"title":"Revert \"Aryan req request table\"","url":"https://github.com/ucsb-cs156-s25/team01-s25-06/pull/56"}]
+pull_requests: [{"author":{"id":"MDQ6VXNlcjY2ODQ5Nzc3","is_bot":false,"login":"yarwinliu","name":""},"headRefName":"yl-mir-delete","number":67,"title":"Yl mir delete","url":"https://github.com/ucsb-cs156-s25/team01-s25-06/pull/67"}]

@@ -115,13 +115,13 @@ public class ArticlesController extends ApiController {
      * 
      * @param id       id of the article to update
      * @param incoming the new article
-     * @return the updated article  object
+     * @return the updated article object
      */
-    @Operation(summary= "Update a single article")
+    @Operation(summary = "Update a single article")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("")
     public Article updateArticle(
-            @Parameter(name="id") @RequestParam Long id,
+            @Parameter(name = "id") @RequestParam Long id,
             @RequestBody @Valid Article incoming) {
 
         Article article = articleRepository.findById(id)
@@ -131,9 +131,27 @@ public class ArticlesController extends ApiController {
         article.setExplanation(incoming.getExplanation());
         article.setUrl(incoming.getUrl());
         article.setTitle(incoming.getTitle());
-        
+
         articleRepository.save(article);
 
         return article;
+    }
+
+    /**
+     * Delete an Article
+     * 
+     * @param id the id of the date to delete
+     * @return a message indicating the date was deleted
+     */
+    @Operation(summary = "Delete an Article")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @DeleteMapping("")
+    public Object deleteArticle(
+            @Parameter(name = "id") @RequestParam Long id) {
+        Article article = articleRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(Article.class, id));
+
+        articleRepository.delete(article);
+        return genericMessage("Article with id %s deleted".formatted(id));
     }
 }

@@ -5,9 +5,7 @@ import edu.ucsb.cs156.example.testconfig.TestConfig;
 import edu.ucsb.cs156.example.ControllerTestCase;
 import edu.ucsb.cs156.example.controllers.ArticlesController;
 import edu.ucsb.cs156.example.entities.Article;
-import edu.ucsb.cs156.example.entities.UCSBDate;
 import edu.ucsb.cs156.example.repositories.ArticleRepository;
-import edu.ucsb.cs156.example.repositories.UCSBDateRepository;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -37,7 +35,7 @@ import static org.mockito.Mockito.when;
 
 @WebMvcTest(controllers = ArticlesController.class)
 @Import(TestConfig.class)
-public class ArticlesControllerTests extends ControllerTestCase{
+public class ArticlesControllerTests extends ControllerTestCase {
     @MockBean
     ArticleRepository articleRepository;
 
@@ -58,7 +56,6 @@ public class ArticlesControllerTests extends ControllerTestCase{
         mockMvc.perform(get("/api/articles/all"))
                 .andExpect(status().is(200)); // logged
     }
-
 
     // Authorization tests for /api/articles/post
     // (Perhaps should also have these for put and delete)
@@ -84,25 +81,23 @@ public class ArticlesControllerTests extends ControllerTestCase{
         LocalDateTime ldt1 = LocalDateTime.parse("2022-01-03T00:00:00");
 
         Article article1 = Article.builder()
-            .url("https://dev.to/katieraby/using-testing-playground-with-react-testing-library-26j7")
-            .title("Using testing-playground with React Testing Library")
-            .explanation("Helpful when we get to front end development")
-            .email("sjilla@ucsb.edu")
-            .dateAdded(ldt1)
-            .build();
-        
+                .url("https://dev.to/katieraby/using-testing-playground-with-react-testing-library-26j7")
+                .title("Using testing-playground with React Testing Library")
+                .explanation("Helpful when we get to front end development")
+                .email("sjilla@ucsb.edu")
+                .dateAdded(ldt1)
+                .build();
 
         LocalDateTime ldt2 = LocalDateTime.parse("2022-03-11T00:00:00");
 
-
         Article article2 = Article.builder()
-            .url("https://twitter.com/maciejwalkowiak/status/1511736828369719300?t=gGXpmBH4y4eY9OBSUInZEg&s=09")
-            .title("Handy Spring Utility Classes")
-            .explanation("A lot of really useful classes are built into Spring")
-            .email("sjilla@ucsb.edu")
-            .dateAdded(ldt2)
-            .build();
-        
+                .url("https://twitter.com/maciejwalkowiak/status/1511736828369719300?t=gGXpmBH4y4eY9OBSUInZEg&s=09")
+                .title("Handy Spring Utility Classes")
+                .explanation("A lot of really useful classes are built into Spring")
+                .email("sjilla@ucsb.edu")
+                .dateAdded(ldt2)
+                .build();
+
         ArrayList<Article> expectedArticles = new ArrayList<>();
         expectedArticles.addAll(Arrays.asList(article1, article2));
 
@@ -128,12 +123,12 @@ public class ArticlesControllerTests extends ControllerTestCase{
         LocalDateTime ldt1 = LocalDateTime.parse("2022-01-03T00:00:00");
 
         Article article1 = Article.builder()
-            .url("https://dev.to/katieraby/using-testing-playground-with-react-testing-library-26j7")
-            .title("TestTitle")
-            .explanation("TestExplanation")
-            .email("sjilla@ucsb.edu")
-            .dateAdded(ldt1)
-            .build();
+                .url("https://dev.to/katieraby/using-testing-playground-with-react-testing-library-26j7")
+                .title("TestTitle")
+                .explanation("TestExplanation")
+                .email("sjilla@ucsb.edu")
+                .dateAdded(ldt1)
+                .build();
         when(articleRepository.save(eq(article1))).thenReturn(article1);
 
         // act
@@ -148,4 +143,59 @@ public class ArticlesControllerTests extends ControllerTestCase{
         String responseString = response.getResponse().getContentAsString();
         assertEquals(expectedJson, responseString);
     }
+
+    @Test
+    public void logged_out_users_cannot_get_by_id() throws Exception {
+        mockMvc.perform(get("/api/articles?id=7"))
+                .andExpect(status().is(403)); // logged out users can't get by id
+    }
+
+    @WithMockUser(roles = { "USER" })
+    @Test
+    public void test_that_logged_in_user_can_get_by_id_when_the_id_exists() throws Exception {
+
+        // arrange
+        LocalDateTime ldt = LocalDateTime.parse("2022-01-03T00:00:00");
+
+        Article article = Article.builder()
+                .url("https://dev.to/katieraby/using-testing-playground-with-react-testing-library-26j7")
+                .title("TestTitle")
+                .explanation("TestExplanation")
+                .email("sjilla@ucsb.edu")
+                .dateAdded(ldt)
+                .build();
+            when(articleRepository.findById(7L)).thenReturn(Optional.of(article));
+
+        // act
+        MvcResult response = mockMvc.perform(get("/api/articles?id=7"))
+                .andExpect(status().isOk()).andReturn();
+
+        // assert
+
+        verify(articleRepository, times(1)).findById(eq(7L));
+        String expectedJson = mapper.writeValueAsString(article);
+        String responseString = response.getResponse().getContentAsString();
+        assertEquals(expectedJson, responseString);
+    }
+
+    @WithMockUser(roles = { "USER" })
+    @Test
+    public void test_that_logged_in_user_can_get_by_id_when_the_id_does_not_exist() throws Exception {
+
+        // arrange
+
+        when(articleRepository.findById(eq(7L))).thenReturn(Optional.empty());
+
+        // act
+        MvcResult response = mockMvc.perform(get("/api/articles?id=7"))
+                .andExpect(status().isNotFound()).andReturn();
+
+        // assert
+
+        verify(articleRepository, times(1)).findById(eq(7L));
+        Map<String, Object> json = responseToJson(response);
+        assertEquals("EntityNotFoundException", json.get("type"));
+        assertEquals("Article with id 7 not found", json.get("message"));
+    }
+
 }

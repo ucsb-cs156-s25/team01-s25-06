@@ -110,47 +110,49 @@ public class ArticlesController extends ApiController {
         return savedArticle;
     }
 
-    // /**
-    // * Delete a UCSBDate
-    // *
-    // * @param id the id of the date to delete
-    // * @return a message indicating the date was deleted
-    // */
-    // @Operation(summary= "Delete a UCSBDate")
-    // @PreAuthorize("hasRole('ROLE_ADMIN')")
-    // @DeleteMapping("")
-    // public Object deleteUCSBDate(
-    // @Parameter(name="id") @RequestParam Long id) {
-    // UCSBDate ucsbDate = ucsbDateRepository.findById(id)
-    // .orElseThrow(() -> new EntityNotFoundException(UCSBDate.class, id));
+    /**
+     * Update a single article
+     * 
+     * @param id       id of the article to update
+     * @param incoming the new article
+     * @return the updated article object
+     */
+    @Operation(summary = "Update a single article")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PutMapping("")
+    public Article updateArticle(
+            @Parameter(name = "id") @RequestParam Long id,
+            @RequestBody @Valid Article incoming) {
 
-    // ucsbDateRepository.delete(ucsbDate);
-    // return genericMessage("UCSBDate with id %s deleted".formatted(id));
-    // }
+        Article article = articleRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(Article.class, id));
 
-    // /**
-    // * Update a single date
-    // *
-    // * @param id id of the date to update
-    // * @param incoming the new date
-    // * @return the updated date object
-    // */
-    // @Operation(summary= "Update a single date")
-    // @PreAuthorize("hasRole('ROLE_ADMIN')")
-    // @PutMapping("")
-    // public UCSBDate updateUCSBDate(
-    // @Parameter(name="id") @RequestParam Long id,
-    // @RequestBody @Valid UCSBDate incoming) {
+        article.setDateAdded(incoming.getDateAdded());
+        article.setExplanation(incoming.getExplanation());
+        article.setUrl(incoming.getUrl());
+        article.setTitle(incoming.getTitle());
+        article.setEmail(incoming.getEmail());
 
-    // UCSBDate ucsbDate = ucsbDateRepository.findById(id)
-    // .orElseThrow(() -> new EntityNotFoundException(UCSBDate.class, id));
+        articleRepository.save(article);
 
-    // ucsbDate.setQuarterYYYYQ(incoming.getQuarterYYYYQ());
-    // ucsbDate.setName(incoming.getName());
-    // ucsbDate.setLocalDateTime(incoming.getLocalDateTime());
+        return article;
+    }
 
-    // ucsbDateRepository.save(ucsbDate);
+    /**
+     * Delete an Article
+     * 
+     * @param id the id of the date to delete
+     * @return a message indicating the date was deleted
+     */
+    @Operation(summary = "Delete an Article")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @DeleteMapping("")
+    public Object deleteArticle(
+            @Parameter(name = "id") @RequestParam Long id) {
+        Article article = articleRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(Article.class, id));
 
-    // return ucsbDate;
-    // }
+        articleRepository.delete(article);
+        return genericMessage("Article with id %s deleted".formatted(id));
+    }
 }

@@ -96,6 +96,23 @@ import java.time.LocalDateTime;
 <span class="fc" id="L96">        return savedmenuitemreview;</span>
     }
 
+    /**
+     * Get a single MenuItemReview by id
+     * 
+     * @param id the id of the MenuItemReview
+     * @return a MenuItemReview
+     */
+    @Operation(summary= &quot;Get a single menu item review&quot;)
+    @PreAuthorize(&quot;hasRole('ROLE_USER')&quot;)
+    @GetMapping(&quot;&quot;)
+    public MenuItemReview getById(
+            @Parameter(name=&quot;id&quot;) @RequestParam Long id) {
+<span class="fc" id="L110">        MenuItemReview menuitemreview = menuItemReviewRepository.findById(id)</span>
+<span class="fc" id="L111">                .orElseThrow(() -&gt; new EntityNotFoundException(MenuItemReview.class, id));</span>
+
+<span class="fc" id="L113">        return menuitemreview;</span>
+    }
+
     
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

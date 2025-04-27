@@ -110,48 +110,50 @@ import java.time.LocalDateTime;
 <span class="fc" id="L110">        return savedArticle;</span>
     }
 
-    // /**
-    // * Delete a UCSBDate
-    // *
-    // * @param id the id of the date to delete
-    // * @return a message indicating the date was deleted
-    // */
-    // @Operation(summary= &quot;Delete a UCSBDate&quot;)
-    // @PreAuthorize(&quot;hasRole('ROLE_ADMIN')&quot;)
-    // @DeleteMapping(&quot;&quot;)
-    // public Object deleteUCSBDate(
-    // @Parameter(name=&quot;id&quot;) @RequestParam Long id) {
-    // UCSBDate ucsbDate = ucsbDateRepository.findById(id)
-    // .orElseThrow(() -&gt; new EntityNotFoundException(UCSBDate.class, id));
+    /**
+     * Update a single article
+     * 
+     * @param id       id of the article to update
+     * @param incoming the new article
+     * @return the updated article object
+     */
+    @Operation(summary = &quot;Update a single article&quot;)
+    @PreAuthorize(&quot;hasRole('ROLE_ADMIN')&quot;)
+    @PutMapping(&quot;&quot;)
+    public Article updateArticle(
+            @Parameter(name = &quot;id&quot;) @RequestParam Long id,
+            @RequestBody @Valid Article incoming) {
 
-    // ucsbDateRepository.delete(ucsbDate);
-    // return genericMessage(&quot;UCSBDate with id %s deleted&quot;.formatted(id));
-    // }
+<span class="fc" id="L127">        Article article = articleRepository.findById(id)</span>
+<span class="fc" id="L128">                .orElseThrow(() -&gt; new EntityNotFoundException(Article.class, id));</span>
 
-    // /**
-    // * Update a single date
-    // *
-    // * @param id id of the date to update
-    // * @param incoming the new date
-    // * @return the updated date object
-    // */
-    // @Operation(summary= &quot;Update a single date&quot;)
-    // @PreAuthorize(&quot;hasRole('ROLE_ADMIN')&quot;)
-    // @PutMapping(&quot;&quot;)
-    // public UCSBDate updateUCSBDate(
-    // @Parameter(name=&quot;id&quot;) @RequestParam Long id,
-    // @RequestBody @Valid UCSBDate incoming) {
+<span class="fc" id="L130">        article.setDateAdded(incoming.getDateAdded());</span>
+<span class="fc" id="L131">        article.setExplanation(incoming.getExplanation());</span>
+<span class="fc" id="L132">        article.setUrl(incoming.getUrl());</span>
+<span class="fc" id="L133">        article.setTitle(incoming.getTitle());</span>
+<span class="fc" id="L134">        article.setEmail(incoming.getEmail());</span>
 
-    // UCSBDate ucsbDate = ucsbDateRepository.findById(id)
-    // .orElseThrow(() -&gt; new EntityNotFoundException(UCSBDate.class, id));
+<span class="fc" id="L136">        articleRepository.save(article);</span>
 
-    // ucsbDate.setQuarterYYYYQ(incoming.getQuarterYYYYQ());
-    // ucsbDate.setName(incoming.getName());
-    // ucsbDate.setLocalDateTime(incoming.getLocalDateTime());
+<span class="fc" id="L138">        return article;</span>
+    }
 
-    // ucsbDateRepository.save(ucsbDate);
+    /**
+     * Delete an Article
+     * 
+     * @param id the id of the date to delete
+     * @return a message indicating the date was deleted
+     */
+    @Operation(summary = &quot;Delete an Article&quot;)
+    @PreAuthorize(&quot;hasRole('ROLE_ADMIN')&quot;)
+    @DeleteMapping(&quot;&quot;)
+    public Object deleteArticle(
+            @Parameter(name = &quot;id&quot;) @RequestParam Long id) {
+<span class="fc" id="L152">        Article article = articleRepository.findById(id)</span>
+<span class="fc" id="L153">                .orElseThrow(() -&gt; new EntityNotFoundException(Article.class, id));</span>
 
-    // return ucsbDate;
-    // }
+<span class="fc" id="L155">        articleRepository.delete(article);</span>
+<span class="fc" id="L156">        return genericMessage(&quot;Article with id %s deleted&quot;.formatted(id));</span>
+    }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

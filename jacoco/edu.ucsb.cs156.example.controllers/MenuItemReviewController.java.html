@@ -142,6 +142,26 @@ import java.time.LocalDateTime;
 <span class="fc" id="L142">        return menuItemReview;</span>
     }
 
+    /**
+     * Delete a MenuItemReview
+     * 
+     * @param id the id of the menu item review to delete
+     * @return a message indicating the menu item review was deleted
+     */
+    @Operation(summary= &quot;Delete a MenuItemReview&quot;)
+    @PreAuthorize(&quot;hasRole('ROLE_ADMIN')&quot;)
+    @DeleteMapping(&quot;&quot;)
+    public Object deleteMenuItemReview(
+            @Parameter(name=&quot;id&quot;) @RequestParam Long id) {
+<span class="fc" id="L156">        MenuItemReview menuitemreview = menuItemReviewRepository.findById(id)</span>
+<span class="fc" id="L157">                .orElseThrow(() -&gt; new EntityNotFoundException(MenuItemReview.class, id));</span>
+
+<span class="fc" id="L159">        menuItemReviewRepository.delete(menuitemreview);</span>
+<span class="fc" id="L160">        return genericMessage(&quot;MenuItemReview with id %s deleted&quot;.formatted(id));</span>
+    }
+
+
+    
     
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

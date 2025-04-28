@@ -25,11 +25,11 @@
                     "column": {
                       "constraints": {
                         "primaryKey": true,
-                        "primaryKeyName": "DININGCOMMONSMENUITEM_PK",
+                        "primaryKeyName": "UCSBDININGCOMMONSMENUITEM_PK",
                         "nullable": false
                       },
                       "name": "ID",
-                      "type": "BIGINT AUTO_INCREMENT"
+                      "type": "BIGINT"
                     }
                   },
                   {

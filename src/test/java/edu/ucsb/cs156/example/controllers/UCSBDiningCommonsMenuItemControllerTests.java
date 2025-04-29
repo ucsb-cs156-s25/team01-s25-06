@@ -154,7 +154,8 @@ public void admin_can_post_a_new_menu_item() throws Exception {
 
     when(ucsbDiningCommonsMenuItemRepository.save(any())).thenReturn(newItem);
 
-    mockMvc.perform(
+    MvcResult response = mockMvc.perform(
+            
             post("/api/ucsbdiningcommonsmenuitem/post")
                     .param("diningcommonscode", "portola")
                     .param("name", "Pasta")
@@ -163,7 +164,13 @@ public void admin_can_post_a_new_menu_item() throws Exception {
             .andExpect(status().isOk())
             .andExpect(jsonPath("$.diningCommonsCode").value("portola"))
             .andExpect(jsonPath("$.name").value("Pasta"))
-            .andExpect(jsonPath("$.station").value("Pasta Station"));
+            .andExpect(jsonPath("$.station").value("Pasta Station"))
+            .andReturn();
+
+            verify(ucsbDiningCommonsMenuItemRepository, times(1)).save(newItem);
+            String expectedJson = mapper.writeValueAsString(newItem);
+            String responseString = response.getResponse().getContentAsString();
+            assertEquals(expectedJson, responseString);
 }
 
     

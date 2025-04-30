@@ -15,7 +15,7 @@ TODO: Fill in this table with correct information.
 |---------------------------|--------------|---------------|
 | UCSBDiningCommonsMenuItem |Saeed Arellano| saeed-ar      |
 | UCSBOrganization          |Timothy Nguyen| timothy878    |
-| RecommendationRequest     |              |               |
+| RecommendationRequest     | Aryan Chopra |aryanchopra1802|
 | MenuItemReview            | Yarwin Liu   | yarwinliu     |
 | HelpRequest               | Riya Gupta   | RiyaGupta1234 |
 | Articles                  |Sanjana Jilla |sanjanajilla913|
